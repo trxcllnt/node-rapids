@@ -17,30 +17,23 @@ cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 
 project(node_example_native_module VERSION 0.0.1 LANGUAGES C CXX)
 
+option(NVIDIA_USE_CCACHE "Enable caching compilation results with ccache" ON)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 ###################################################################################################
 # - cmake modules ---------------------------------------------------------------------------------
 
-execute_process(COMMAND npx nvidia-cmake-modules-path
+execute_process(COMMAND node -p
+                "require('@nvidia/cmake-modules').cmake_modules_path"
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                 OUTPUT_VARIABLE NVIDIA_CMAKE_MODULES_PATH
                 OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${NVIDIA_CMAKE_MODULES_PATH}")
 
+include(ConfigureCXX)
 include(ConfigureNapi)
-
-include(FeatureSummary)
-include(CheckIncludeFiles)
-include(CheckLibraryExists)
-
-###################################################################################################
-# - compiler options ------------------------------------------------------------------------------
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_C_COMPILER $ENV{CC})
-set(CMAKE_CXX_COMPILER $ENV{CXX})
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 ###################################################################################################
 # - include paths ---------------------------------------------------------------------------------
