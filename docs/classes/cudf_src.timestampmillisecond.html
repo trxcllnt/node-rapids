@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>GraphCOOConstructor | RAPIDS</title>
+	<title>TimestampMillisecond | RAPIDS</title>
 	<meta name="description" content="Documentation for RAPIDS">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -53,13 +53,13 @@
 					<a href="../modules.html">RAPIDS</a>
 				</li>
 				<li>
-					<a href="../modules/cugraph_src.html">cugraph/src</a>
+					<a href="../modules/cudf_src.html">cudf/src</a>
 				</li>
 				<li>
-					<a href="cugraph_src.graphcooconstructor.html">GraphCOOConstructor</a>
+					<a href="cudf_src.timestampmillisecond.html">TimestampMillisecond</a>
 				</li>
 			</ul>
-			<h1>Interface GraphCOOConstructor</h1>
+			<h1>Class TimestampMillisecond</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">GraphCOOConstructor</span>
+						<span class="tsd-signature-type">TimestampMillisecond</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">TimestampMillisecond</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -78,67 +83,57 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-interface"><a href="cugraph_src.graphcooconstructor.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><a href="cudf_src.timestampmillisecond.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="cugraph_src.graphcooconstructor.html#prototype" class="tsd-kind-icon">prototype</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="cudf_src.timestampmillisecond.html#scalartype" class="tsd-kind-icon">scalar<wbr>Type</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>GraphCOOConstructor<span class="tsd-signature-symbol">(</span>src<span class="tsd-signature-symbol">: </span><a href="../modules/cudf_src.html#column-1" class="tsd-signature-type" data-tsd-kind="Variable">Column</a><span class="tsd-signature-symbol">&lt;</span><a href="../classes/cudf_src.int32.html" class="tsd-signature-type" data-tsd-kind="Class">Int32</a><span class="tsd-signature-symbol">&gt;</span>, dst<span class="tsd-signature-symbol">: </span><a href="../modules/cudf_src.html#column-1" class="tsd-signature-type" data-tsd-kind="Variable">Column</a><span class="tsd-signature-symbol">&lt;</span><a href="../classes/cudf_src.int32.html" class="tsd-signature-type" data-tsd-kind="Class">Int32</a><span class="tsd-signature-symbol">&gt;</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">{ </span>directedEdges<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">GraphCOO</span></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Timestamp<wbr>Millisecond<span class="tsd-signature-symbol">(</span>timezone<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="cudf_src.timestampmillisecond.html" class="tsd-signature-type" data-tsd-kind="Class">TimestampMillisecond</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from arrow.TimestampMillisecond.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/trxcllnt/node-rapids/blob/781d9f1/modules/cugraph/src/graph_coo.ts#L19">modules/cugraph/src/graph_coo.ts:19</a></li>
+									<li>Defined in node_modules/apache-arrow/type.d.ts:396</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>src: <a href="../modules/cudf_src.html#column-1" class="tsd-signature-type" data-tsd-kind="Variable">Column</a><span class="tsd-signature-symbol">&lt;</span><a href="../classes/cudf_src.int32.html" class="tsd-signature-type" data-tsd-kind="Class">Int32</a><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-								<li>
-									<h5>dst: <a href="../modules/cudf_src.html#column-1" class="tsd-signature-type" data-tsd-kind="Variable">Column</a><span class="tsd-signature-symbol">&lt;</span><a href="../classes/cudf_src.int32.html" class="tsd-signature-type" data-tsd-kind="Class">Int32</a><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-symbol">{ </span>directedEdges<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> }</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter">
-											<h5><span class="tsd-flag ts-flagOptional">Optional</span> directed<wbr>Edges<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
-										</li>
-									</ul>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> timezone: <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">GraphCOO</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="cudf_src.timestampmillisecond.html" class="tsd-signature-type" data-tsd-kind="Class">TimestampMillisecond</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="prototype" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> prototype</h3>
-					<div class="tsd-signature tsd-kind-icon">prototype<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">GraphCOO</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="scalartype" class="tsd-anchor"></a>
+					<h3>scalar<wbr>Type</h3>
+					<div class="tsd-signature tsd-kind-icon">scalar<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/trxcllnt/node-rapids/blob/781d9f1/modules/cugraph/src/graph_coo.ts#L19">modules/cugraph/src/graph_coo.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/trxcllnt/node-rapids/blob/8c94015/modules/cudf/src/types/dtypes.ts#L134">modules/cudf/src/types/dtypes.ts:134</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -153,10 +148,10 @@
 					<li class=" tsd-kind-module">
 						<a href="../modules/cuda_src.html">cuda/src</a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class="current tsd-kind-module">
 						<a href="../modules/cudf_src.html">cudf/src</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/cugraph_src.html">cugraph/src</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -180,22 +175,19 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="cugraph_src.graphcooconstructor.html" class="tsd-kind-icon">GraphCOOConstructor</a>
+					<li class="current tsd-kind-class tsd-parent-kind-module">
+						<a href="cudf_src.timestampmillisecond.html" class="tsd-kind-icon">Timestamp<wbr>Millisecond</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-interface">
-								<a href="cugraph_src.graphcooconstructor.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
+								<a href="cudf_src.timestampmillisecond.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="cugraph_src.graphcooconstructor.html#prototype" class="tsd-kind-icon">prototype</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="cudf_src.timestampmillisecond.html#scalartype" class="tsd-kind-icon">scalar<wbr>Type</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-variable tsd-parent-kind-module">
-						<a href="../modules/cugraph_src.html#graphcoo" class="tsd-kind-icon">GraphCOO</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
@@ -214,17 +206,19 @@
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
 			</ul>
 		</div>
 	</div>
