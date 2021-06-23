@@ -28,7 +28,9 @@ function(find_and_configure_cudf VERSION)
     _set_package_dir_if_exists(Thrust thrust)
     _set_package_dir_if_exists(libcudacxx libcudacxx)
     _set_package_dir_if_exists(arrow_static arrow)
+    _set_package_dir_if_exists(arrow_shared arrow)
     _set_package_dir_if_exists(arrow_cuda_static arrow)
+    _set_package_dir_if_exists(arrow_cuda_shared arrow)
 
     if(NOT TARGET cudf::cudf)
         if(${VERSION} MATCHES [=[([0-9]+)\.([0-9]+)\.([0-9]+)]=])
@@ -48,7 +50,7 @@ function(find_and_configure_cudf VERSION)
                                 "JITIFY_USE_CACHE ON"
                                 "CUDA_STATIC_RUNTIME ON"
                                 "CUDF_ENABLE_ARROW_S3 OFF"
-                                "CUDF_USE_ARROW_STATIC ON"
+                                "CUDF_USE_ARROW_STATIC OFF"
                                 "PER_THREAD_DEFAULT_STREAM ON"
                                 "DISABLE_DEPRECATION_WARNING ON")
     endif()
