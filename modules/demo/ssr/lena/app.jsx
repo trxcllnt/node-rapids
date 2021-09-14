@@ -70,7 +70,6 @@ export class App extends React.Component {
         onViewStateChange={() => this.setState({
           autoCenter: params.autoCenter ? (params.autoCenter.val = false) : false
         })}
-        _framebuffer={props.getRenderTarget ? props.getRenderTarget() : null}
         onAfterRender={composeFns([onAfterRender, this.state.onAfterRender])}>
         <GraphLayer
           edgeStrokeWidth={2}
@@ -89,8 +88,7 @@ export class App extends React.Component {
             opacity={0.9}
             maxWidth={2000}
             pickable={false}
-            background={true}
-            getBackgroundColor={() => [46, 46, 46]}
+            backgroundColor={[46, 46, 46]}
             getTextAnchor='start'
             getAlignmentBaseline='top'
             getSize={(d) => d.size}
