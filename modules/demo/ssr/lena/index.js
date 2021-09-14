@@ -104,26 +104,11 @@ function createGraph(source) {
   jsdom.window.evalFn(() => {
     const React         = require('react');
     const ReactDOM      = require('react-dom');
-    const {Texture2D}   = require('@luma.gl/webgl');
     const {Framebuffer} = require('@luma.gl/webgl');
     const App           = require('./app.jsx').default;
     let framebuffer     = null;
     const props         = {
-      onWebGLInitialized(gl) {
-        framebuffer = new Framebuffer(gl, {
-          width: this.canvas.width,
-          height: this.canvas.height,
-          color: new Texture2D(gl, {
-            mipmaps: false,
-            parameters: {
-              [gl.TEXTURE_MIN_FILTER]: gl.LINEAR,
-              [gl.TEXTURE_MAG_FILTER]: gl.LINEAR,
-              [gl.TEXTURE_WRAP_S]: gl.CLAMP_TO_EDGE,
-              [gl.TEXTURE_WRAP_T]: gl.CLAMP_TO_EDGE,
-            }
-          })
-        });
-      },
+      onWebGLInitialized: (gl) => framebuffer = new Framebuffer(gl),
       onBeforeRender({gl}) { this._framebuffer = framebuffer; },
       onResize({width, height}) { framebuffer.resize({width, height}); },
       onAfterRender({gl}) { __onFrame({gl, framebuffer: this._framebuffer}); },

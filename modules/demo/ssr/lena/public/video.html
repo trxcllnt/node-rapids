@@ -54,12 +54,17 @@
         dispatchRemoteEvent(video, 'mouseleave');
 
         function dispatchRemoteEvent(target, type) {
-            target.addEventListener(type, (e) =>
-                peer.send(JSON.stringify({ type: 'event', data: serializeEvent(e) })));
+            let timeout = null;
+            target.addEventListener(type, (e) => {
+                if (!timeout) {
+                    timeout = setTimeout(() => { timeout = null; }, 1000 / 60);
+                    peer.send(JSON.stringify({ type: 'event', data: serializeEvent(e) }));
+                }
+            });
         }
 
         function serializeEvent(original) {
-            return Object
+            const serialized = Object
                 .getOwnPropertyNames(Object.getPrototypeOf(original))
                 .reduce((serialized, field) => {
                     switch (typeof original[field]) {
@@ -70,6 +75,12 @@
                     }
                     return serialized;
                 }, { type: original.type });
+            if (original.type === 'wheel') {
+                const { x = window.mouseX } = original;
+                const { y = window.mouseY } = original;
+                Object.assign(serialized, {x, y});
+            }
+            return serialized;
         }
 
         function onlyH264(sdp) {

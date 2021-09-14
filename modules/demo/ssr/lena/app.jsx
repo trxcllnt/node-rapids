@@ -113,7 +113,14 @@ export class App extends React.Component {
 export default App;
 
 App.defaultProps = {
-  controller: { keyboard: false },
+  controller: {
+    keyboard: false,
+    doubleClickZoom: false,
+    scrollZoom: {
+      speed: 0.01,
+      smooth: true,
+    }
+  },
   onHover: onDragEnd,
   onDrag: onDragStart,
   onDragEnd: onDragEnd,
