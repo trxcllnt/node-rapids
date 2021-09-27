@@ -21,6 +21,7 @@ x-base-settings: &base_service_settings
 x-main-service-settings: &main_service_settings
   <<: *base_service_settings
   volumes:
+#     - "./sccache:/usr/bin/sccache"
     - "${PWD}:/opt/rapids/node:rw"
     - "/etc/fonts:/etc/fonts:ro"
     - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
@@ -40,11 +41,18 @@ x-main-service-settings: &main_service_settings
     XDG_RUNTIME_DIR: "${XDG_RUNTIME_DIR:-/run/user/$UID}"
     DBUS_SESSION_BUS_ADDRESS: "${DBUS_SESSION_BUS_ADDRESS:-unix:path=/run/user/$UID/bus}"
   cap_add:
+#     - SETUID
+#     - SETGID
     - SYS_ADMIN
+#     - SYS_CHROOT
+#     - NET_ADMIN
     - SYS_PTRACE
   security_opt:
+#     - seccomp=unconfined
     - apparmor=unconfined
-
+#     - label=type:spc_t
+#     - label=type:container_userns_t
+#   privileged: true
 
 services:
 

@@ -131,3 +131,5 @@ enable_language(CUDA)
 list(APPEND NODE_RAPIDS_CMAKE_CUDA_FLAGS -Werror=cross-execution-space-call)
 list(APPEND NODE_RAPIDS_CMAKE_CUDA_FLAGS --expt-extended-lambda --expt-relaxed-constexpr)
 list(APPEND NODE_RAPIDS_CMAKE_CUDA_FLAGS -Xcompiler=-Wall,-Werror,-Wno-error=deprecated-declarations)
+
+list(APPEND CMAKE_CUDA_FLAGS "-v")

@@ -1,0 +1,8 @@
+[dist]
+scheduler_url = "http://192.168.10.241:10600"
+toolchains = []
+toolchain_cache_size = 107374182400
+
+[dist.auth]
+type = "token"
+token = "qihZMTLkXAz7PD7hmRcC"
