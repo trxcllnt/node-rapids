@@ -12,7 +12,7 @@ Additionally, `node-rapids` includes _limited_ bindings to:
 * [`@nvidia/cuda`](https://github.com/rapidsai/node/tree/main/modules/cuda) - Interact with GPUs via the [CUDA Runtime APIs](https://developer.nvidia.com/cuda-toolkit)
 * [`@nvidia/glfw`](https://github.com/rapidsai/node/tree/main/modules/glfw) - Create platform-agnostic native windows with OpenGL contexts via [GLFW](https://github.com/glfw/glfw)
 * [`@nvidia/webgl`](https://github.com/rapidsai/node/tree/main/modules/webgl) - Provides a [`WebGL2RenderingContext`](https://developer.mozilla.org/en-US/docs/Web/API/WebGL2RenderingContext) via [OpenGL ES](https://www.khronos.org/opengles)
-* [`@rapidsai/blazingsql`](https://github.com/rapidsai/node/tree/main/modules/blazingsql) - Bindings to the [BlazingSQL engine](https://github.com/BlazingDB/blazingsql)
+* [`@rapidsai/sql`](https://github.com/rapidsai/node/tree/main/modules/sql) - GPU-accelerated SQL queries
 
 See the [API docs](https://rapidsai.github.io/node/) for detailed information about each module.
 
@@ -36,6 +36,9 @@ The `node-rapids` modules are not yet available on npm. They must be built local
 We've included a container for launching [`nteract/desktop`](https://nteract.io/desktop) with access to locally built `node-rapids` modules:
 
 ```shell
+# Make a local .env file of var overrides for the containers and build
+cp .env.sample .env
+
 # Build the development and nteract containers (only necessary once)
 yarn docker:build:devel && yarn docker:build:devel:nteract
 
@@ -69,7 +72,7 @@ You can review [BINDINGS.md](https://github.com/rapidsai/node/blob/main/BINDINGS
 
 ### What is the `.env` file used for and what variables can be set in it?
 
-The `.env` file is used by the [docker-compose.yml](https://github.com/rapidsai/node/blob/main/docker-compose.devel.yml) file when building and running the development containers (i.e. `yarn docker:build:devel` and `yarn docker:run:devel`). Any variables in the [docker-compose.yml](https://github.com/rapidsai/node/blob/main/docker-compose.devel.yml) file can be set in the `.env` file. The [.env.sample](https://github.com/rapidsai/node/blob/main/.env.sample) file includes some common variables that may be set in the `.env` file.
+The `.env` file is used by the [docker-compose.*.yml](https://github.com/rapidsai/node/blob/main/docker-compose.devel.yml) files when building and running the containers (i.e. `yarn docker:{build,run}:{devel,runtime}`). Any variables in the [docker-compose.*.yml](https://github.com/rapidsai/node/blob/main/docker-compose.devel.yml) files can be set in the `.env` file. The [.env.sample](https://github.com/rapidsai/node/blob/main/.env.sample) file includes some common variables that may be set in the `.env` file.
 
 ## License
 

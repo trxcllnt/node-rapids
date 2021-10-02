@@ -1,4 +1,4 @@
-#!/usr/bin/env -S node --trace-uncaught
+#!/usr/bin/env -S node --experimental-vm-modules --trace-uncaught
 
 // Copyright (c) 2020, NVIDIA CORPORATION.
 //
@@ -15,6 +15,7 @@
 // limitations under the License.
 
 module.exports = (glfwOptions = {
+  title: 'Interleaved Buffer Demo',
   transparent: false
 }) => {
   const jsdom = new (require('@rapidsai/jsdom').RapidsJSDOM)({

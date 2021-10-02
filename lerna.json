@@ -6,6 +6,7 @@
   "packages": [
     "modules/*",
     "modules/demo/graph",
+    "modules/demo/umap",
     "modules/demo/luma",
     "modules/demo/spatial",
     "modules/demo/xterm",
@@ -13,6 +14,7 @@
     "modules/demo/ipc/*",
     "modules/demo/ssr/*",
     "modules/demo/tfjs/*",
-    "modules/demo/client-server"
+    "modules/demo/client-server",
+    "modules/demo/sql/*"
   ]
 }
