@@ -26,12 +26,26 @@ function init({uuid, ...props}: {uuid: string}&ContextProps) {
 
 function dropTable({name}: {name: string}) { context.dropTable(name); }
 
-async function createTable({name, table_id}: {name: string, table_id: string}) {
-  context.createTable(name, await context.pull(table_id));
+async function createDataFrameTable({name, table_id}: {name: string, table_id: string}) {
+  const table = await context.pull(table_id);
+  context.createDataFrameTable(name, table);
 }
 
-async function sql({uuid, query, token}: {uuid: string, query: string, token: number}) {
-  await context.sql(query, token).sendTo(0, uuid);
+function createCSVTable({name, paths}: {name: string, paths: string[]}) {
+  context.createCSVTable(name, paths);
+}
+
+function createParquetTable({name, paths}: {name: string, paths: string[]}) {
+  context.createParquetTable(name, paths);
+}
+
+function createORCTable({name, paths}: {name: string, paths: string[]}) {
+  context.createORCTable(name, paths);
+}
+
+async function sql({query, token, destinationId}:
+                     {uuid: string, query: string, token: number; destinationId: number}) {
+  return {messageIds: await context.sql(query, token).sendTo(destinationId)};
 }
 
 process.on('message', ({type, ...opts}: any) => {
@@ -42,12 +56,20 @@ process.on('message', ({type, ...opts}: any) => {
       case 'init': return init(opts);
       case 'sql': return await sql(opts);
       case 'dropTable': return dropTable(opts);
-      case 'createTable': return await createTable(opts);
+      case 'createDataFrameTable': return await createDataFrameTable(opts);
+      case 'createCSVTable': return createCSVTable(opts);
+      case 'createParquetTable': return createParquetTable(opts);
+      case 'createORCTable': return createORCTable(opts);
     }
     return {};
   })()
     .catch((error) => {
-      if (opts.uuid && process.send) { process.send({error, uuid: opts.uuid}); }
+      if (opts.uuid && process.send) {
+        process.send({
+          error: {message: error?.message || 'Unknown error', stack: error?.stack},
+          uuid: opts.uuid
+        });
+      }
     })
     .then((res: any) => {
       if (opts.uuid && process.send) { process.send({...res, uuid: opts.uuid}); }

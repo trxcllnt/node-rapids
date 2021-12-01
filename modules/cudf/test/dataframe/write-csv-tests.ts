@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Float64Buffer, Int32Buffer, setDefaultAllocator} from '@nvidia/cuda';
+import {Float64Buffer, Int32Buffer, setDefaultAllocator} from '@rapidsai/cuda';
 import {DataFrame, Float64, Int32, Series} from '@rapidsai/cudf';
 import {DeviceBuffer} from '@rapidsai/rmm';
 
@@ -20,7 +20,7 @@ import {makeCSVString, toStringAsync} from './utils';
 
 setDefaultAllocator((byteLength: number) => new DeviceBuffer(byteLength));
 
-describe('DataFrame.writeCSV', () => {
+describe('DataFrame.toCSV', () => {
   test('writes a CSV', async () => {
     const rows = [
       {a: 0, b: '1.0', c: '2'},

@@ -1,4 +1,4 @@
-#!/usr/bin/env -S node --experimental-vm-modules --trace-uncaught
+#!/usr/bin/env node
 
 // Copyright (c) 2021, NVIDIA CORPORATION.
 //
@@ -15,7 +15,7 @@
 // limitations under the License.
 
 module.exports = () => {
-  const {GLFWOpenGLProfile} = require('@nvidia/glfw');
+  const {GLFWOpenGLProfile} = require('@rapidsai/glfw');
   const {RapidsJSDOM}       = require('@rapidsai/jsdom');
   const jsdom               = new RapidsJSDOM({
     // Change cwd to the example dir so relative file paths are resolved

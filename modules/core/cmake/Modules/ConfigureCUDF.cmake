@@ -25,8 +25,8 @@ function(find_and_configure_cudf VERSION)
     _set_package_dir_if_exists(cudf cudf)
     _set_package_dir_if_exists(dlpack dlpack)
     _set_package_dir_if_exists(jitify jitify)
+    _set_package_dir_if_exists(nvcomp nvcomp)
     _set_package_dir_if_exists(Thrust thrust)
-    _set_package_dir_if_exists(libcudacxx libcudacxx)
 
     # Set this so Arrow doesn't add `-Werror` to
     # CMAKE_CXX_FLAGS when CMAKE_BUILD_TYPE=Debug
@@ -35,15 +35,15 @@ function(find_and_configure_cudf VERSION)
     set(BUILD_WARNING_LEVEL "PRODUCTION" CACHE STRING "" FORCE)
 
     if(NOT TARGET cudf::cudf)
-        _fix_rapids_cmake_dir()
         _get_major_minor_version(${VERSION} MAJOR_AND_MINOR)
         _get_update_disconnected_state(cudf ${VERSION} UPDATE_DISCONNECTED)
         CPMFindPackage(NAME     cudf
             VERSION             ${VERSION}
-            # GIT_REPOSITORY      https://github.com/rapidsai/cudf.git
-            # GIT_TAG             branch-${MAJOR_AND_MINOR}
-            GIT_REPOSITORY      https://github.com/trxcllnt/cudf.git
-            GIT_TAG             fix/nvcomp-absolute-paths
+            GIT_REPOSITORY      https://github.com/rapidsai/cudf.git
+            GIT_TAG             branch-${MAJOR_AND_MINOR}
+            # GIT_REPOSITORY      https://github.com/trxcllnt/cudf.git
+            # GIT_TAG             fix/arrow-parquet-targets-${MAJOR_AND_MINOR}
+            # GIT_TAG             fix/nvcomp-absolute-paths
             GIT_SHALLOW         TRUE
             ${UPDATE_DISCONNECTED}
             SOURCE_SUBDIR       cpp
@@ -60,7 +60,6 @@ function(find_and_configure_cudf VERSION)
                                 "CUDF_ENABLE_ARROW_PARQUET ON"
                                 "PER_THREAD_DEFAULT_STREAM ON"
                                 "DISABLE_DEPRECATION_WARNING ON")
-        _fix_rapids_cmake_dir()
     endif()
 
     # Make sure consumers of our libs can see cudf::cudf

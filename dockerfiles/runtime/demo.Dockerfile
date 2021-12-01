@@ -5,30 +5,27 @@ FROM ${DEVEL_IMAGE} as devel
 
 WORKDIR /home/node
 
-RUN cp                                               \
-    /opt/rapids/node/.npmrc                          \
-    /opt/rapids/node/build/rapidsai-core-*.tgz       \
-    /opt/rapids/node/build/nvidia-cuda-*.tgz         \
-    /opt/rapids/node/build/nvidia-glfw-*.tgz         \
-    /opt/rapids/node/build/nvidia-webgl-*.tgz        \
-    /opt/rapids/node/build/rapidsai-rmm-*.tgz        \
-    /opt/rapids/node/build/rapidsai-cudf-*.tgz       \
-    /opt/rapids/node/build/rapidsai-sql-*.tgz        \
-    /opt/rapids/node/build/rapidsai-cuml-*.tgz       \
-    /opt/rapids/node/build/rapidsai-cugraph-*.tgz    \
-    /opt/rapids/node/build/rapidsai-cuspatial-*.tgz  \
-    /opt/rapids/node/build/rapidsai-deck.gl-*.tgz    \
-    /opt/rapids/node/build/rapidsai-jsdom-*.tgz      \
-    /opt/rapids/node/build/rapidsai-demo-*.tgz       \
+RUN cp                                   \
+    /opt/rapids/wrtc-0.4.7-dev.tgz       \
+    /opt/rapids/rapidsai-core-*.tgz      \
+    /opt/rapids/rapidsai-cuda-*.tgz      \
+    /opt/rapids/rapidsai-glfw-*.tgz      \
+    /opt/rapids/rapidsai-webgl-*.tgz     \
+    /opt/rapids/rapidsai-rmm-*.tgz       \
+    /opt/rapids/rapidsai-cudf-*.tgz      \
+    /opt/rapids/rapidsai-sql-*.tgz       \
+    /opt/rapids/rapidsai-cuml-*.tgz      \
+    /opt/rapids/rapidsai-cugraph-*.tgz   \
+    /opt/rapids/rapidsai-cuspatial-*.tgz \
+    /opt/rapids/rapidsai-deck.gl-*.tgz   \
+    /opt/rapids/rapidsai-jsdom-*.tgz     \
+    /opt/rapids/rapidsai-demo-*.tgz      \
     . \
  && npm install --production --omit dev --omit peer --omit optional --legacy-peer-deps --force *.tgz
-
 
 FROM ${FROM_IMAGE}
 
 SHELL ["/bin/bash", "-c"]
-
-ENV NVIDIA_DRIVER_CAPABILITIES all
 
 USER root
 
@@ -63,28 +60,31 @@ RUN cd /usr/local/lib \
  \
  # Install dependencies
  && export DEBIAN_FRONTEND=noninteractive \
- && apt update --fix-missing \
+ && apt update \
  && apt install -y --no-install-recommends \
     # cuSpatial dependencies
     libgdal-dev \
     # X11 dependencies
-    libxrandr-dev libxinerama-dev libxcursor-dev \
+    libxrandr2 libxinerama1 libxcursor1 \
     # Wayland dependencies
-    libwayland-dev wayland-protocols libxkbcommon-dev \
+    wayland-protocols \
+    libwayland-{bin,egl1,cursor0,client0,server0} \
+    libxkbcommon0 libxkbcommon-x11-0 \
     # GLEW dependencies
-    libgl1-mesa-dev libegl1-mesa-dev libglu1-mesa-dev \
+    libglvnd0 libgl1 libglx0 libegl1 libgles2 libglu1-mesa \
     # UCX runtime dependencies
-    libibverbs-dev librdmacm-dev libnuma-dev libhwloc-dev \
+    libibverbs1 librdmacm1 libnuma1 \
     # node-canvas dependencies
-    libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev \
+    libcairo2 libpango-1.0-0 libpangocairo-1.0-0 libjpeg8 libgif7 librsvg2-2 \
     # SQL dependencies
-    openjdk-8-jre libboost-regex-dev libboost-system-dev libboost-filesystem-dev \
+    openjdk-8-jre-headless libboost-regex-dev libboost-system-dev libboost-filesystem-dev \
  # Clean up
  && apt autoremove -y && apt clean \
  && rm -rf \
     /tmp/* \
     /var/tmp/* \
-    /var/lib/apt/lists/*
+    /var/lib/apt/lists/* \
+    /var/cache/apt/archives/*
 
 COPY --from=devel --chown=node:node /home/node/node_modules/ /home/node/node_modules/
 

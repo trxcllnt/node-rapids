@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 
 set -Eeo pipefail
-# set -x
 
-if [ -d node_modules/esm/node_modules/.cache ]; then
-    find node_modules -name .cache -type d -exec rm -rf "{}" +
-fi;
+find node_modules -name .cache -type d -exec rm -rf "{}" +
 
 fuzzy-find() {
     (
@@ -29,7 +26,7 @@ fi
 
 if [[ "$DEMO" == "" ]]; then
     DEMOS="
-    $(echo modules/demo/{graph,luma,spatial,xterm,client-server,umap}/package.json)
+    $(echo modules/demo/{graph,luma,spatial,xterm,client-server,umap,viz-app}/package.json)
     $(find modules/demo/{deck,tfjs,ipc,ssr,sql} -maxdepth 2 -type f -name 'package.json')
     ";
     DEMOS="$(echo -e "$DEMOS" | grep -v node_modules | sort -Vr)";

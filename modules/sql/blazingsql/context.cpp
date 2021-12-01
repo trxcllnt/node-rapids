@@ -31,8 +31,8 @@ namespace {
 std::pair<std::vector<std::string>, Table::wrapper_t> get_names_and_table(NapiToCPP::Object df) {
   std::vector<std::string> names = df.Get("names");
   Napi::Function asTable         = df.Get("asTable");
-  Table::wrapper_t table         = asTable.Call(df.val, {}).ToObject();
-  return {std::move(names), std::move(table)};
+  auto table                     = asTable.Call(df.val, {});
+  return {std::move(names), table.ToObject()};
 }
 
 }  // namespace
@@ -41,6 +41,7 @@ Napi::Function Context::Init(Napi::Env const& env, Napi::Object exports) {
   return DefineClass(env,
                      "Context",
                      {
+                       InstanceAccessor<&Context::get_ral_id>("id"),
                        InstanceMethod<&Context::send>("send"),
                        InstanceMethod<&Context::pull>("pull"),
                        InstanceMethod<&Context::broadcast>("broadcast"),
@@ -100,11 +101,11 @@ Napi::Value Context::run_generate_graph(Napi::CallbackInfo const& info) {
 
   for (std::size_t i = 0; i < data_frames.Length(); ++i) {
     NapiToCPP::Object df = data_frames.Get(i);
-    auto [names, table]  = get_names_and_table(df);
-
+    auto [names, table]  = std::move(get_names_and_table(df));
     tables.Set(i, table);
-    table_views.push_back(*table);
-    column_names.push_back(names);
+    auto view = table->view();
+    table_views.push_back(view);
+    column_names.push_back(std::move(names));
   }
 
   std::vector<std::string> worker_ids;
@@ -130,6 +131,10 @@ Napi::Value Context::run_generate_graph(Napi::CallbackInfo const& info) {
                                         config_options);
 }
 
+Napi::Value Context::get_ral_id(Napi::CallbackInfo const& info) {
+  return Napi::Value::From(info.Env(), _id);
+}
+
 void Context::send(int32_t const& dst_ral_id,
                    std::string const& ctx_token,
                    std::string const& message_id,
@@ -151,7 +156,7 @@ void Context::send(Napi::CallbackInfo const& info) {
   std::string message_id = args[2];
   NapiToCPP::Object df   = args[3];
 
-  auto [names, table] = get_names_and_table(df);
+  auto [names, table] = std::move(get_names_and_table(df));
 
   this->send(dst_ral_id, ctx_token, message_id, names, *table);
 }
@@ -166,9 +171,7 @@ Napi::Value Context::broadcast(Napi::CallbackInfo const& info) {
   int32_t ctx_token    = args[0];
   NapiToCPP::Object df = args[1];
 
-  Table::wrapper_t table;
-  std::vector<std::string> names;
-  std::tie(names, table) = get_names_and_table(df);
+  auto [names, table] = std::move(get_names_and_table(df));
 
   auto const num_rows    = table->num_rows();
   auto const num_workers = _worker_ids.size();

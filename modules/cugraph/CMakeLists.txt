@@ -28,10 +28,10 @@ unset(CMAKE_LIBRARY_OUTPUT_DIRECTORY CACHE)
 option(NODE_RAPIDS_USE_SCCACHE "Enable caching compilation results with sccache" ON)
 option(DISABLE_DEPRECATION_WARNINGS "Disable warnings generated from deprecated declarations." ON)
 
-set(RMM_VERSION "21.10.00")
-set(CUDF_VERSION "21.10.00")
-set(CUGRAPH_VERSION "21.10.00")
-set(RAFT_VERSION "21.10.00")
+set(RMM_VERSION "22.02.00")
+set(CUDF_VERSION "22.02.00")
+set(CUGRAPH_VERSION "22.02.00")
+set(RAFT_VERSION "22.02.00")
 
 ###################################################################################################
 # - cmake modules ---------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ execute_process(COMMAND node -p
                 OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 execute_process(COMMAND node -p
-                "require('path').dirname(require.resolve('@nvidia/cuda'))"
+                "require('path').dirname(require.resolve('@rapidsai/cuda'))"
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                 OUTPUT_VARIABLE NODE_RAPIDS_CUDA_MODULE_PATH
                 OUTPUT_STRIP_TRAILING_WHITESPACE)

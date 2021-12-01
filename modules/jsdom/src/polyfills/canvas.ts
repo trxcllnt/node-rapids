@@ -15,7 +15,7 @@
 import * as jsdom from 'jsdom';
 
 export function installGetContext(window: jsdom.DOMWindow) {
-  const gl = window.evalFn(() => require('@nvidia/webgl')) as typeof import('@nvidia/webgl');
+  const gl = window.evalFn(() => require('@rapidsai/webgl')) as typeof import('@rapidsai/webgl');
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const JSDOM_getContext = window.HTMLCanvasElement.prototype.getContext;
@@ -69,7 +69,7 @@ export function installGetContext(window: jsdom.DOMWindow) {
     null;
   function getContext(contextId: 'webgl2',
                       options?: WebGLContextAttributes): WebGL2RenderingContext|null;
-  function getContext(this: any, ...args: [OffscreenRenderingContextId | 'experimental-webgl', RenderingContextSettings?]): RenderingContext | null {
+  function getContext(this: any, ...args: ['2d' | 'bitmaprenderer' | 'webgl' | 'webgl2' | 'experimental-webgl', RenderingContextSettings?]): RenderingContext | null {
     const [type, settings = {}] = args;
     switch (type) {
       case 'webgl':

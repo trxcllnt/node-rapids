@@ -18,7 +18,7 @@ import {
   Int32Buffer,
   setDefaultAllocator,
   Uint8Buffer
-} from '@nvidia/cuda';
+} from '@rapidsai/cuda';
 import {Bool8, Column, Float32, Float64, Int32, Series, Uint8, Utf8String} from '@rapidsai/cudf';
 import {CudaMemoryResource, DeviceBuffer} from '@rapidsai/rmm';
 import {BoolVector} from 'apache-arrow';
@@ -150,6 +150,20 @@ test('Column.nansToNulls', () => {
   expect([...Series.new(result)]).toEqual(expected);
 });
 
+test('Column.stringsFromBooleans', () => {
+  const col      = Series.new([true, false, true, null, true])._col;
+  const result   = col.stringsFromBooleans();
+  const expected = ['true', 'false', 'true', null, 'true'];
+  expect([...Series.new(result)]).toEqual(expected);
+});
+
+test('Column.stringsToBooleans', () => {
+  const col      = Series.new(['true', 'false', 'true', null, 'true'])._col;
+  const result   = col.stringsToBooleans();
+  const expected = [true, false, true, null, true];
+  expect([...Series.new(result)]).toEqual(expected);
+});
+
 test('Column.stringIsFloat', () => {
   const col      = Series.new(['1.2', '12', 'abc', '-2.3', '-5', null, '2e+17', '0'])._col;
   const result   = col.stringIsFloat();
@@ -190,6 +204,39 @@ test('Column.stringsToIntegers', () => {
   const result   = col.stringsToIntegers(new Int32);
   const expected = [12, -5, null, 0];
   expect([...Series.new(result)]).toEqual(expected);
+});
+
+describe('Column.replaceSlice', () => {
+  test('prepend', () => {
+    const col      = Series.new(['foo', 'bar', 'abcdef'])._col;
+    const result   = col.replaceSlice('123', 0, 0);
+    const expected = ['123foo', '123bar', '123abcdef'];
+    expect([...Series.new(result)]).toEqual(expected);
+  });
+  test('append', () => {
+    const col      = Series.new(['foo', 'bar', 'abcdef'])._col;
+    const result   = col.replaceSlice('123', -1, -1);
+    const expected = ['foo123', 'bar123', 'abcdef123'];
+    expect([...Series.new(result)]).toEqual(expected);
+  });
+  test('insert', () => {
+    const col      = Series.new(['foo', 'bar', 'abcdef'])._col;
+    const result   = col.replaceSlice('123', 1, 1);
+    const expected = ['f123oo', 'b123ar', 'a123bcdef'];
+    expect([...Series.new(result)]).toEqual(expected);
+  });
+  test('replace middle', () => {
+    const col      = Series.new(['foo', 'bar', 'abcdef'])._col;
+    const result   = col.replaceSlice('123', 1, 2);
+    const expected = ['f123o', 'b123r', 'a123cdef'];
+    expect([...Series.new(result)]).toEqual(expected);
+  });
+  test('replace entire', () => {
+    const col      = Series.new(['foo', 'bar', 'abcdef'])._col;
+    const result   = col.replaceSlice('123', 0, -1);
+    const expected = ['123', '123', '123'];
+    expect([...Series.new(result)]).toEqual(expected);
+  });
 });
 
 describe('Column.setNullMask', () => {

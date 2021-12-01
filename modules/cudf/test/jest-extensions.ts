@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {BigIntArray, TypedArray} from '@nvidia/cuda';
+import {BigIntArray, TypedArray} from '@rapidsai/cuda';
 import {zip} from 'ix/iterable';
 
 declare global {
@@ -36,12 +36,12 @@ function toEqualTypedArray<T extends TypedArray|BigIntArray>(
     for (const [x, y] of zip<number>(<any>actual, <any>expected)) {
       try {
         (isNaN(x) && isNaN(y)) ? expect(x).toBeNaN() : expect(x).toBeCloseTo(y);
-      } catch (e) { failures.push(e); }
+      } catch (e: any) { failures.push(e); }
     }
   } else {
     try {
       expect(actual).toEqual(expected);
-    } catch (e) { failures.push(e); }
+    } catch (e: any) { failures.push(e); }
   }
   return {
     pass: failures.length === 0,

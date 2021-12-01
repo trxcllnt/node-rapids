@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {Uint8ClampedBuffer} from '@nvidia/cuda';
+import {Uint8ClampedBuffer} from '@rapidsai/cuda';
 import {MemoryResource} from '@rapidsai/rmm';
 
-import {Series} from '../series';
+import {Series, StringSeries} from '../series';
 import {Bool8, Int32, Int64} from '../types/dtypes';
 
 import {NumericSeries} from './numeric';
@@ -24,6 +24,10 @@ import {NumericSeries} from './numeric';
  * A Series of 1-byte boolean values in GPU memory.
  */
 export class Bool8Series extends NumericSeries<Bool8> {
+  _castAsString(memoryResource?: MemoryResource): StringSeries {
+    return StringSeries.new(this._col.stringsFromBooleans(memoryResource));
+  }
+
   /**
    * A Uint8 view of the values in GPU memory.
    */
@@ -134,5 +138,35 @@ export class Bool8Series extends NumericSeries<Bool8> {
   cumulativeSum(skipNulls = true, memoryResource?: MemoryResource) {
     const result_series = this._prepare_scan_series(skipNulls).cast(new Int64, memoryResource);
     return Series.new(result_series._col.cumulativeSum(memoryResource));
+  }
+
+  /** @inheritdoc */
+  min(skipNulls = true, memoryResource?: MemoryResource) {
+    return super.min(skipNulls, memoryResource) as number;
+  }
+
+  /** @inheritdoc */
+  max(skipNulls = true, memoryResource?: MemoryResource) {
+    return super.max(skipNulls, memoryResource) as number;
+  }
+
+  /** @inheritdoc */
+  minmax(skipNulls = true, memoryResource?: MemoryResource) {
+    return super.minmax(skipNulls, memoryResource) as [number, number];
+  }
+
+  /** @inheritdoc */
+  sum(skipNulls = true, memoryResource?: MemoryResource) {
+    return super.sum(skipNulls, memoryResource) as number;
+  }
+
+  /** @inheritdoc */
+  product(skipNulls = true, memoryResource?: MemoryResource) {
+    return super.product(skipNulls, memoryResource) as number;
+  }
+
+  /** @inheritdoc */
+  sumOfSquares(skipNulls = true, memoryResource?: MemoryResource) {
+    return super.sumOfSquares(skipNulls, memoryResource) as number;
   }
 }
