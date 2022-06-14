@@ -15,12 +15,14 @@
 import {
   DataFrame,
   Float32,
+  Float64,
   Int32,
   List,
   Series,
   Struct,
   Uint32,
   Uint8,
+  scope,
 } from '@rapidsai/cudf';
 import {Quadtree} from '@rapidsai/cuspatial';
 import {tableFromIPC} from 'apache-arrow';
@@ -98,9 +100,44 @@ export async function loadTracts() {
   /**
    * @type DataFrame<{ id: Int32, polygon: List<List<Struct<{x: Float32, y: Float32}>>> }>
    */
-  const tracts = new DataFrame({
-    id: Series.new(table.getChildAt(0)),
-    polygon: Series.new(table.getChildAt(1)),
+  const tracts = scope(() => {
+    const tracts = new DataFrame({
+      id: Series.new(table.getChildAt(0)),
+      polygon: Series.new(table.getChildAt(1)),
+    });
+    if (process.env.FLOAT64_POINTS !== '1') {
+      return tracts;
+    }
+    const polys = tracts.get('polygon');
+    const rings = polys.elements;
+    return new DataFrame({
+      id: tracts.get('id'),
+      polygon: Series.new({
+        nullCount: 0,
+        type: polys.type,
+        length: polys.length,
+        children: [
+          polys.offsets,
+          Series.new({
+            nullCount: 0,
+            type: rings.type,
+            length: rings.length,
+            children: [
+              rings.offsets,
+              Series.new({
+                nullCount: 0,
+                type: rings.elements.type,
+                length: rings.elements.length,
+                children: [
+                  rings.elements.getChild('x').cast(new Float64),
+                  rings.elements.getChild('y').cast(new Float64)
+                ]
+              })
+            ]
+          })
+        ],
+      }),
+    });
   });
 
   const [xMin, xMax] = tracts.get('polygon').elements.elements.getChild('x').minmax();
@@ -129,10 +166,14 @@ export async function loadPoints() {
   /**
    * @type DataFrame<{ x: Float32, y: Float32 }>
    */
-  const points = new DataFrame({
+  let points = new DataFrame({
     x: Series.new(table.getChildAt(0)),
     y: Series.new(table.getChildAt(1)),
   });
+
+  if (process.env.FLOAT64_POINTS === '1') {
+    points = points.cast(new Float64);
+  }
 
   console.timeEnd(`copy points to GPU (${(168898952).toLocaleString()} points)`);
 
