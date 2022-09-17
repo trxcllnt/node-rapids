@@ -3,7 +3,8 @@
   "version": "22.8.1",
   "description": "JSDOM extensions for running browser-ish code in platform-native (and headless) GPU-accelerated GLFW windows",
   "license": "Apache-2.0",
-  "main": "index.js",
+  "main": "index.cjs",
+  "type": "commonjs",
   "types": "build/js",
   "author": "NVIDIA, Inc. (https://nvidia.com/)",
   "maintainers": [
@@ -16,6 +17,16 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rapidsai/node.git"
+  },
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./index.mjs",
+        "require": "./index.cjs"
+      },
+      "import": "./index.mjs",
+      "require": "./index.cjs"
+    }
   },
   "scripts": {
     "clean": "rimraf build doc compile_commands.json",
@@ -55,7 +66,9 @@
   "files": [
     "build",
     "LICENSE",
-    "index.js",
+    "src/**/*.ts",
+    "index.cjs",
+    "index.mjs",
     "README.md",
     "package.json"
   ]

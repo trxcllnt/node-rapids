@@ -2,7 +2,8 @@
   "name": "@rapidsai/rmm",
   "version": "22.8.1",
   "description": "RMM - NVIDIA RAPIDS Memory Manager",
-  "main": "index.js",
+  "main": "index.cjs",
+  "type": "commonjs",
   "types": "build/js",
   "license": "Apache-2.0",
   "author": "NVIDIA, Inc. (https://nvidia.com/)",
@@ -16,6 +17,16 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rapidsai/node.git"
+  },
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./index.mjs",
+        "require": "./index.cjs"
+      },
+      "import": "./index.mjs",
+      "require": "./index.cjs"
+    }
   },
   "scripts": {
     "install": "npx rapidsai-install-native-module",
@@ -51,7 +62,9 @@
   "files": [
     "LICENSE",
     "README.md",
-    "index.js",
+    "src/**/*.ts",
+    "index.cjs",
+    "index.mjs",
     "package.json",
     "CMakeLists.txt",
     "src/node_rmm",

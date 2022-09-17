@@ -3,7 +3,8 @@
   "version": "22.8.1",
   "description": "cuSpatial - NVIDIA RAPIDS GIS and Spatiotemporal Analytics Library",
   "license": "Apache-2.0",
-  "main": "index.js",
+  "main": "index.cjs",
+  "type": "commonjs",
   "types": "build/js",
   "author": "NVIDIA, Inc. (https://nvidia.com/)",
   "maintainers": [
@@ -16,6 +17,16 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rapidsai/node.git"
+  },
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./index.mjs",
+        "require": "./index.cjs"
+      },
+      "import": "./index.mjs",
+      "require": "./index.cjs"
+    }
   },
   "scripts": {
     "install": "npx rapidsai-install-native-module",
@@ -51,7 +62,9 @@
   "files": [
     "LICENSE",
     "README.md",
-    "index.js",
+    "src/**/*.ts",
+    "index.cjs",
+    "index.mjs",
     "package.json",
     "CMakeLists.txt",
     "src/node_cuspatial",

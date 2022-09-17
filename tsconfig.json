@@ -143,9 +143,10 @@
         "downlevelIteration": true,
 
         /* Create inline sourcemaps with sources */
-        "sourceMap": false,
-        "inlineSources": true,
-        "inlineSourceMap": true,
+        "sourceMap": true,
+        "inlineSources": false,
+        "inlineSourceMap": false,
+        "sourceRoot": "../../src",
 
         /* The most restrictive settings possible */
         "strict": true,

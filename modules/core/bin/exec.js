@@ -19,9 +19,9 @@ module.exports = function (cmd, args, env = {}) {
   var name = (() => {
     switch (require('os').platform()) {
       case 'win32':
-        return 'windows.sh'
+        return 'windows.sh';
       default:
-        return 'linux.sh'
+        return 'linux.sh';
     }
   })();
 
